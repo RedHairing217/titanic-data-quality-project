@@ -1,0 +1,19 @@
+DATA AUDIT — TITANIC PROJECT 4/13/26
+
+Missing Values:
+- Age: 177 missing (20%)
+- Cabin: 687 (77%), dropping
+- Embarked: 2, filling
+
+Decisions:
+- Drop: Name, Ticket, Cabin
+- Keep: Pclass, Sex, Age, Fare, SibSp, Parch, Embarked
+
+Observations:
+- Mix of categorical and numeric features
+- Sex likely strong predictor based on historical data of woman and children being given priority for lifeboats, more significant predictor than age due to a 20% loss on age data
+- Slight class imbalance (~38% survived)
+- High-cardinality columns are also likely irrelevant. Based on the context and panicked nature of the evacuation, names and ticket numbers are unlikely to have been factored into lifeboat decisions. Concluding that name and ticket # not useful predictors
+
+Next Step:
+- Build baseline model with minimal cleaning
