@@ -1,0 +1,44 @@
+ROUGH MODEL RESULTS 4/13/26
+
+Model:
+- Logistic Regression
+Justification - This is a useful statistical method for binary outcome prediction from multi-variable input data
+
+Preprocessing:
+- Dropped: 
+Name - relevancy + cardinality
+Ticket - relevancy + cardinality
+Cabin - potentially relevant, but missing data > 75% is unacceptable for predictive purposes
+
+- Filled Age with median, missing data ~20%
+- Filled Embarked with mode
+- Kept PassengerId in dataframe but excluded from model features
+- Used one-hot encoding with drop_first=True
+
+Train/Test Split:
+- test_size = 0.2
+- random_state = 217 (irrelevant number, personal reasons)
+- stratify = y
+
+Metrics:
+- Accuracy: 0.8492
+- Precision: 0.9038
+- Recall: 0.6812
+
+Classification Report:
+Class 0:
+- Precision: 0.83
+- Recall: 0.95
+- F1-score: 0.89
+
+Class 1:
+- Precision: 0.90
+- Recall: 0.68
+- F1-score: 0.78
+
+Observations:
+- Model performs well overall
+- Model is conservative when predicting survival
+- Precision is high, but recall is too low
+- The model misses a meaningful number of actual survivors as a result
+- This rough model will serve as a launch pad for an upcoming cleaner version

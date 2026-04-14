@@ -12,8 +12,14 @@ Decisions:
 Observations:
 - Mix of categorical and numeric features
 - Sex likely strong predictor based on historical data of woman and children being given priority for lifeboats, more significant predictor than age due to a 20% loss on age data
+- Also anticipating correlation between Pclass and survival considering the historical reality of lifeboat placement and access being more significant for upper class passengers
 - Slight class imbalance (~38% survived)
 - High-cardinality columns are also likely irrelevant. Based on the context and panicked nature of the evacuation, names and ticket numbers are unlikely to have been factored into lifeboat decisions. Concluding that name and ticket # not useful predictors
+
+Data quality considerations:
+The missing cabin data does not seem to pose a poisoning concern considering the age of the data resulting in incomplete records with paper data tracking. Potentially compounded if majority of cabins were assigned upon arrival to the ship as opposed to upon ticket purchase, resulting in most of the cabin assignment records existing exclusively at the bottom of the Atlantic ocean.
+
+Data at large seems consistent, acceptable input for predictive purposes
 
 Next Step:
 - Build baseline model with minimal cleaning
