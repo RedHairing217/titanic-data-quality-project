@@ -31,7 +31,7 @@ As a baseline model, logistic regression offers a clear perspective on feature i
 The rough model is strong overall, but recall is lower than precision, meaning the model misses a meaningful number of actual survivors.
 
 ## Cleaned model conclusions
- (4/13/26 5:24 PM PDT) Family size was collapsed from SibSp and ParCh, then solo travelers were isolated. This had no effect model effectiveness, meaning that family size or whether someone was traveling alone are likely to be insignificant predictors for survival. Moving focus to age, sex, and Pclass.
+ (4/13/26 5:24 PM PDT) Family size was collapsed from SibSp and ParCh, then solo travelers were isolated. This had no on affect model effectiveness, meaning that family size or whether someone was traveling alone are likely to be insignificant predictors for survival. Moving focus to age, sex, and Pclass.
 ## Repository Structure
 - `src/` → code for audit, preprocessing, training, evaluation
 - `outputs/` → notes and results
