@@ -5,7 +5,11 @@ Explore how data quality and preprocessing affect model performance on the Titan
 
 ## Project Focus
 This project compares a baseline model against a cleaner, better-preprocessed version of the dataset to understand how data quality decisions impact results.
-
+## Project Requirements
+- Accuracy >= 0.85
+- Precision >= 0.85
+- Recall >= 0.75
+- Log Loss <= 0.5
 ## Workflow
 1. Data audit
 2. Baseline preprocessing
