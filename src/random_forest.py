@@ -2,6 +2,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, classification_report, log_loss
+from sklearn.calibration import CalibratedClassifierCV
 #pull data from input filepath
 def load_data(path):
     return pd.read_csv(path)
@@ -44,8 +45,11 @@ def split_features_target(df):
 
 
 def train_model(X_train, y_train):
-    model = RandomForestClassifier(random_state=217)
+    base_model = RandomForestClassifier(random_state=217)
+
+    model = CalibratedClassifierCV(base_model, method="sigmoid", cv=5)
     model.fit(X_train, y_train)
+
     return model
 
 
