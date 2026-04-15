@@ -1,8 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, classification_report, log_loss
-
 #pull data from input filepath
 def load_data(path):
     return pd.read_csv(path)
@@ -10,7 +9,7 @@ def load_data(path):
 #Dataframe cleaning process
 def cleaning(df):
     # Drop columns we decided are not useful for baseline modeling
-    df = df.drop(columns=["Ticket", "Cabin"], errors="ignore")
+    df = df.drop(columns=["Ticket", "Cabin", "Name"], errors="ignore")
 
     # Fill a few missing values
     df["Age"] = df["Age"].fillna(df["Age"].median())
@@ -18,33 +17,20 @@ def cleaning(df):
     
     #create family size predictor collapsed column
     df["FamilySize"] = df["SibSp"] + df["Parch"] + 1
-    df = df.drop(columns=["SibSp", "Parch"])
     
     #isolate solo travelers
     df["IsAlone"] = (df["FamilySize"] == 1).astype(int)
     #group by age
     df["AgeGroup"] = pd.cut(df["Age"], bins=[0, 12, 20, 40, 60, 100])
-   
-    
-    #adjust name to title
-    df["Title"] = df["Name"].str.extract(r", (\w+)\.")
-    df["Title"] = df["Title"].replace([
-    "Lady", "Countess", "Capt", "Col", "Don", "Dr", "Major", 
-    "Rev", "Sir", "Jonkheer", "Dona"
-], "Rare")
-    df["Title"] = df["Title"].replace({
-    "Mlle": "Miss",
-    "Ms": "Miss",
-    "Mme": "Mrs"
-})
-    df = df.drop(columns=["Name"])
+
+    df = df.drop(columns=["SibSp", "Parch"])
     return df
 
 
 
 def encode_features(df):
     # Convert categorical columns into numeric columns
-    df = pd.get_dummies(df, columns=["Sex", "Embarked","AgeGroup", "Title"], drop_first=True)
+    df = pd.get_dummies(df, columns=["Sex", "Embarked","AgeGroup"], drop_first=True)
     return df
 
 
@@ -58,16 +44,18 @@ def split_features_target(df):
 
 
 def train_model(X_train, y_train):
-    model = LogisticRegression(max_iter=1000)
+    model = RandomForestClassifier(random_state=217)
     model.fit(X_train, y_train)
     return model
 
 
 def evaluate_model(model, X_test, y_test):
-    #predictions
+    # Predictions
     y_pred = model.predict(X_test)
+
     # Probabilities for log loss
     y_probs = model.predict_proba(X_test)[:, 1]
+
     # Metrics
     accuracy = accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred)
@@ -81,7 +69,7 @@ def evaluate_model(model, X_test, y_test):
     print(f"Recall:    {recall:.4f}")
     print(f"Log Loss:  {loss:.4f}")
 
-    print("\nClassification Report")
+    print("\n=== Classification Report ===")
     print(classification_report(y_test, y_pred))
 
 

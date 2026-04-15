@@ -18,20 +18,39 @@ This project compares a baseline model against a cleaner, better-preprocessed ve
 Titanic competition dataset from Kaggle.
 https://www.kaggle.com/competitions/titanic/overview
 
-## Modeling tool justification
+## Initial modeling tool justification
 I am using logistic regression because this is a binary classification problem (predicting survival vs. non-survival). It provides a simple and interpretable model for understanding how multiple input features influence the probability of survival.
 
 As a baseline model, logistic regression offers a clear perspective on feature influence and allows for straightforward evaluation of how data quality and preprocessing decisions affect model performance.
-## Rough Model Results
+## Logistic Model Results
 - Accuracy: 0.8492
 - Precision: 0.9038
 - Recall: 0.6812
+- Log Loss:  0.4303
 
-## Key Insight
+## Logistic Model Insights
 The rough model is strong overall, but recall is lower than precision, meaning the model misses a meaningful number of actual survivors.
+(4/13/26 5:24 PM PDT) Family size was collapsed from SibSp and ParCh, then solo travelers were isolated. This had no on affect model effectiveness, meaning that family size or whether someone was traveling alone are likely to be insignificant predictors for survival. Moving focus to age, sex, and Pclass.
+(4/14/26 2:18 PM PDT) Data cleaning and segmentation has proved inconsequential for improving accuracy, precision, or recall. While results are strong, more balance between precision and recall would be preferred. Moving to random forest modeling to add depth and deepen tuning options
 
-## Cleaned model conclusions
- (4/13/26 5:24 PM PDT) Family size was collapsed from SibSp and ParCh, then solo travelers were isolated. This had no on affect model effectiveness, meaning that family size or whether someone was traveling alone are likely to be insignificant predictors for survival. Moving focus to age, sex, and Pclass.
+## Secondary modeling tool justificaiton
+Random Forest was introduced after logistic regression performance plateaued despite multiple feature engineering attempts. This suggested that the underlying relationships in the data were not fully captured by a linear model.
+
+Random Forest was chosen because it can model non-linear relationships and feature interactions, leading to improved recall and overall model behavior.
+
+## Random Forest Results
+- Accuracy:  0.8436
+- Precision: 0.8361
+- Recall:    0.7391
+- Log Loss:  0.6505
+
+## Random Forest Insights
+(4/15/2026 4:00 PM) ## Random Forest Insights
+
+(4/15/2026 4:00 PM)
+Switching to Random Forest improved balance between precision and recall compared to logistic regression. However, this came at the cost of higher log loss (~+0.22), indicating less reliable probability estimates.
+The next step is to apply probability calibration to improve log loss while maintaining balanced classification performance.
+
 ## Repository Structure
 - `src/` → code for audit, preprocessing, training, evaluation
 - `outputs/` → notes and results

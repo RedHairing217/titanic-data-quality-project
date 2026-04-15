@@ -10,6 +10,7 @@ Name - relevancy + cardinality
 Ticket - relevancy + cardinality
 Cabin - potentially relevant, but missing data > 75% is unacceptable for predictive purposes
 
+
 - Filled Age with median, missing data ~20%
 - Filled Embarked with mode
 - Kept PassengerId in dataframe but excluded from model features

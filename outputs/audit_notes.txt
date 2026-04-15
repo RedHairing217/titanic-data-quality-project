@@ -1,7 +1,7 @@
 DATA AUDIT — TITANIC PROJECT 4/13/26
 
 Missing Values:
-- Age: 177 missing (20%)
+- Age: 177 missing (20%), imputing
 - Cabin: 687 (77%), dropping
 - Embarked: 2, filling
 
