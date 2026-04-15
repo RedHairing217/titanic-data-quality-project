@@ -29,8 +29,8 @@ As a baseline model, logistic regression offers a clear perspective on feature i
 - Log Loss:  0.4303
 
 ## Logistic Model Insights
-The rough model is strong overall, but recall is lower than precision, meaning the model misses a meaningful number of actual survivors.
-(4/13/26 5:24 PM PDT) Family size was collapsed from SibSp and ParCh, then solo travelers were isolated. This had no on affect model effectiveness, meaning that family size or whether someone was traveling alone are likely to be insignificant predictors for survival. Moving focus to age, sex, and Pclass.
+The rough model is strong overall, but recall is lower than precision, meaning the model misses a meaningful number of actual survivors.\
+(4/13/26 5:24 PM PDT) Family size was collapsed from SibSp and ParCh, then solo travelers were isolated. This had no on affect model effectiveness, meaning that family size or whether someone was traveling alone are likely to be insignificant predictors for survival. Moving focus to age, sex, and Pclass.\
 (4/14/26 2:18 PM PDT) Data cleaning and segmentation has proved inconsequential for improving accuracy, precision, or recall. While results are strong, more balance between precision and recall would be preferred. Moving to random forest modeling to add depth and deepen tuning options
 
 ## Secondary modeling tool justificaiton
@@ -45,11 +45,9 @@ Random Forest was chosen because it can model non-linear relationships and featu
 - Log Loss:  0.6505
 
 ## Random Forest Insights
-(4/15/2026 4:00 PM) ## Random Forest Insights
-
-(4/15/2026 4:00 PM)
-Switching to Random Forest improved balance between precision and recall compared to logistic regression. However, this came at the cost of higher log loss (~+0.22), indicating less reliable probability estimates.
+(4/15/2026 4:00 PM) Switching to Random Forest improved balance between precision and recall compared to logistic regression. However, this came at the cost of higher log loss (~+0.22), indicating less reliable probability estimates.
 The next step is to apply probability calibration to improve log loss while maintaining balanced classification performance.
+
 
 ## Repository Structure
 - `src/` → code for audit, preprocessing, training, evaluation
