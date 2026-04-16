@@ -154,7 +154,7 @@ Constraining `max_depth` to 12 improved CV accuracy slightly, confirming that fu
 ## Tuned Model Insights
 
 **Threshold Decision**\
-Two thresholds tie on accuracy and loss: 0.3 and 0.45. The difference is the precision/recall trade-off — 0.3 achieves recall of 0.7826 at the cost of precision dropping to 0.8438, while 0.45 holds precision at 0.8929 within 0.010 of reaching all four project requirements locally. However, submission at 0.3 produced a Kaggle score of 0.75358, worse than 0.45's 0.77272, indicating the lower threshold overpredicts survivors on unseen data. 0.45 is the correct submission threshold.
+Two thresholds tie on accuracy and loss: 0.3 and 0.45. The difference is the precision/recall trade-off, 0.3 achieves recall of 0.7826 at the cost of precision dropping to 0.8438, while 0.45 holds precision at 0.8929 within 0.010 of reaching all four project requirements locally. However, submission at 0.3 produced a Kaggle score of 0.75358, worse than 0.45's 0.77272, indicating the lower threshold overpredicts survivors on unseen data. 0.45 is the correct submission threshold.
 
 **Comparison to Previous Best**\
 The tuned model improves accuracy by +0.0056 and precision by +0.0157 over the previous final model (threshold 0.475), while holding recall steady. Log Loss is unchanged at 0.4188.
