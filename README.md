@@ -161,7 +161,7 @@ Two thresholds tie on Accuracy and Loss: 0.3 and 0.45. The difference is the Pre
 Even though 0.3 comes closest to hitting project targets, submission at 0.3 produced a Kaggle score of 0.75358, significantly worse than 0.45's 0.77272
 
 **Comparison to Previous Best**\
-The tuned model improves accuracy by +0.0056 and precision by +0.0157 over the previous final model (threshold 0.475), while holding recall steady. Log Loss is reduced to 0.3948
+The tuned model improves accuracy by +0.0056 and precision by +0.0285 over the previous final model (threshold 0.475), at the cost of 0.0145 recall. Log Loss is reduced to 0.3948
 
 
 ## Hyperparameter Final Model Results
