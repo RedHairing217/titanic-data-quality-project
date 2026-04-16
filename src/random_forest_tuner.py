@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score, classification_report, log_loss
@@ -55,7 +56,8 @@ def train_model(X_train, y_train):
 
 def evaluate_model(model, X_test, y_test):
     # Predictions
-    y_pred = model.predict(X_test)
+    y_probs = model.predict_proba(X_test)[:, 1]
+    y_pred = (y_probs > 0.475).astype(int)
 
     # Probabilities for log loss
     y_probs = model.predict_proba(X_test)[:, 1]
@@ -64,18 +66,37 @@ def evaluate_model(model, X_test, y_test):
     accuracy = accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred)
     recall = recall_score(y_test, y_pred)
-    loss = log_loss(y_test, y_probs)
+    loss = 1 - accuracy              # ← 0–1 loss
+    logloss = log_loss(y_test, y_probs)
 
     # Output
-    print("=== Model Results ===")
+    print("=== MODEL RESULTS ===")
     print(f"Accuracy:  {accuracy:.4f}")
     print(f"Precision: {precision:.4f}")
     print(f"Recall:    {recall:.4f}")
-    print(f"Log Loss:  {loss:.4f}")
+    print(f"Loss:      {loss:.4f}")
+    print(f"Log Loss:  {logloss:.4f}")
 
     print("\n=== Classification Report ===")
     print(classification_report(y_test, y_pred))
 
+
+
+def evaluate_thresholds(model, X_test, y_test):
+    y_probs = model.predict_proba(X_test)[:, 1]
+
+    print("| Thresh|Accuracy|Precision| Recall|  Loss  |")
+    print("|-------|--------|--------|--------|--------|")
+
+    # include 0.50 by going slightly past it
+    for t in np.arange(0.35, 0.501, 0.025):
+        y_pred = (y_probs > t).astype(int)
+
+        accuracy = accuracy_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred, zero_division=0)
+        recall = recall_score(y_test, y_pred)
+        loss = 1 - accuracy
+        print(f"| {t:.3f} | {accuracy:.4f} | {precision:.4f} | {recall:.4f} | {loss:.4f} |")
 
 def main():
     df = load_data("data/raw/train.csv")
@@ -92,9 +113,8 @@ def main():
         random_state=217,
         stratify=y
     )
-
     model = train_model(X_train, y_train)
-    evaluate_model(model, X_test, y_test)
+    evaluate_thresholds(model, X_test, y_test)
 
 
 if __name__ == "__main__":
