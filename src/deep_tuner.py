@@ -49,7 +49,7 @@ def main():
     # Hyperparameter grid search
     param_grid = {
         "n_estimators": [200, 300],
-        "max_depth": [6, 8, 10, 12],
+        "max_depth": [6, 8, 10, 12, None],
         "min_samples_leaf": [2, 3],
         "max_features": ["sqrt"],
     }
