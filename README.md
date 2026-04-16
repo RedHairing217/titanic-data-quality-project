@@ -12,7 +12,10 @@ This project compares a baseline model against a cleaner, better-preprocessed ve
 - Log Loss ≤ 0.45
 ## Repository Structure
 - `src/` → code for audit, preprocessing, training, evaluation
-    - `tools.py` shared tools imported across all scripts; consolidates cleaning, encoding, and training logic to ensure consistent behavior
+    - `tools.py`→ Shared tools imported across all scripts; consolidates cleaning, encoding, and training logic to ensure consistent behavior
+    - `deep_tuner.py`→ Analyzes model performance across a range of hyperparameter and threshold configurations, outputting comparative tables to assist in tuning decisions
+    - `final_model.py`→ Evaluates model performance on a local train/test split to validate tuning decisions before submission
+    - `predictor.py`→ Trains on the full `train.csv` dataset and predicts survivors for `test.csv`, outputting results to `test_predictions.csv`
 - `outputs/` → notes and results from data audit
 - `data/` → local data folders (raw data not tracked)
 ## Workflow
@@ -161,7 +164,7 @@ Two thresholds tie on Accuracy and Loss: 0.3 and 0.45. The difference is the Pre
 Even though 0.3 comes closest to hitting project targets, submission at 0.3 produced a Kaggle score of 0.75358, significantly worse than 0.45's 0.77272
 
 **Comparison to Previous Best**\
-The tuned model improves accuracy by +0.0056 and precision by +0.0285 over the previous final model (threshold 0.475), at the cost of 0.0145 recall. Log Loss is reduced to 0.3948
+The tuned model improves accuracy by +0.0056 and precision by +0.0285 over the previous final model (threshold 0.475), at the cost of -0.0145 recall. Log Loss is reduced to 0.3948
 
 
 ## Hyperparameter Final Model Results
