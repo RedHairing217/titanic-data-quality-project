@@ -103,7 +103,7 @@ The weakness of 0.375 is the obvious increase in false positives, 0.475 is the s
 Switching to `RandomForest` achieved the goal of increasing recall to acceptable levels with minimal impact to precision and accuracy.\
 Implementing calibration tools even allowed for a decrease in Log Loss compared to Logistic Regression, which was an initial concern considering that ~0.65 Log Loss is unacceptable\
 The calibration process also resulted in a minor decrease in Recall, with significant increases in Accuracy and Precision.\
-Implementing tuning allowed us to recover the lost Recall with minimal impact to other factors.
+Implementing tuning allowed me to recover the lost Recall with minimal impact to other factors.
 
 
 While I was unable to find a tuning procedure that hit all three targets, I am satisfied with the final result and have learned a great deal throughout this process.
