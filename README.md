@@ -190,6 +190,6 @@ Recall remains the one unmet target. While we were able to tune this model at 0.
 
 **(4/15/26)** Local metrics and Kaggle scores told different stories, and I was unable to close that gap. Local accuracy peaked at 0.8603 while my best Kaggle submission scored 0.77272.
 
-This is likely due to the size of the data set, only 891 rows. 0.2 test size was chosen to maximize training FOV. threshold tables based on ~178 test passengers are sensitive to which passengers land in the test fold, so cross-validation gave a more honest estimate of ~0.83.
+This is likely due to the size of the data set, only 891 rows. 0.2 test size was chosen to maximize training FOV. Threshold tables based on ~178 test passengers are sensitive to which passengers land in the test fold, so cross-validation gave a more honest estimate of ~0.83.
 
 Threshold 0.3 came within 0.01 precision of hitting all project targets locally, but scored 0.75358 on Kaggle, significantly worse than 0.45's 0.77272. While 0.3 may be more appropriate for real-world applications, like contacting shipwreck survivors, 0.45 is the correct threshold for competitive accuracy.
