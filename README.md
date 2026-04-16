@@ -12,7 +12,7 @@ This project compares a baseline model against a cleaner, better-preprocessed ve
 - Log Loss ≤ 0.45
 ## Repository Structure
 - `src/` → code for audit, preprocessing, training, evaluation
-    - `tools.py` shared utilities imported across all scripts — consolidates cleaning, encoding, and training logic to ensure consistent behavior
+    - `tools.py` shared tools imported across all scripts; consolidates cleaning, encoding, and training logic to ensure consistent behavior
 - `outputs/` → notes and results from data audit
 - `data/` → local data folders (raw data not tracked)
 ## Workflow
