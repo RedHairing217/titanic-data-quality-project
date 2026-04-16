@@ -100,6 +100,9 @@ Implementing our calibration tools even allowed for a decrease in Log Loss compa
 The calibration process also resulted in a minor decrease in Recall, with significant increases in Accuracy and Precision.\
 Implenting tuning alowed us to recover the lost Recall with minimal impact to other factors.
 
+
+While I was unable to find a tuning procedure that hit all three targets, I am satisfied with the final result and have learned a great deal throughout this process.
+
 **Decision and Justification**\
 The final decision of implementing a 0.375 or a 0.475 threshold lies with the models final goal (maximizing found survivors vs maximizing predictive accuracy).
 For the goals of this project, I've decided to submit with 0.475 threshold to reduce false positives and mazimize predictive accuracy. 
