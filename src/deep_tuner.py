@@ -25,6 +25,35 @@ def evaluate_thresholds(model, X_test, y_test):
 
         print(f"| {t:.3f}     | {accuracy:.4f}   | {precision:.4f}    | {recall:.4f} | {loss:.4f} | {logloss:.4f}   |")
 
+def find_max_depth_ceiling(X_train, y_train):
+    from sklearn.model_selection import cross_val_score
+
+    print("| Max Depth | CV Accuracy |")
+    print("|-----------|-------------|")
+
+    best_score = 0
+    best_depth = None
+
+    for depth in range(2, 25):
+        model = RandomForestClassifier(
+            max_depth=depth,
+            max_features="sqrt",
+            min_samples_leaf=2,
+            n_estimators=200,
+            random_state=217,
+        )
+        scores = cross_val_score(model, X_train, y_train, cv=10, scoring="accuracy")
+        mean = scores.mean()
+        marker = "<" if mean > best_score else ""
+
+        print(f"| {depth:<9} | {mean:.4f}      {marker}")
+
+        if mean > best_score:
+            best_score = mean
+            best_depth = depth
+
+    print(f"\nBest max_depth: {best_depth} → CV Accuracy: {best_score:.4f}")
+    return best_depth
 
 def main():
     df = load_data("data/raw/train.csv")
@@ -47,9 +76,11 @@ def main():
     evaluate_thresholds(model, X_test, y_test)
 
     # Hyperparameter grid search
+    best_depth = find_max_depth_ceiling(X_train, y_train)
+
     param_grid = {
         "n_estimators": [200, 300],
-        "max_depth": [6, 8, 10, 12, None],
+        "max_depth": [best_depth - 2, best_depth, best_depth + 2],
         "min_samples_leaf": [2, 3],
         "max_features": ["sqrt"],
     }
