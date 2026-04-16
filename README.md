@@ -5,7 +5,7 @@ Explore how data quality and preprocessing affect model performance on the Titan
 
 ## Project Focus
 This project compares a baseline model against a cleaner, better-preprocessed version of the dataset to understand how data quality decisions impact results.
-## Project Requirements
+## Evaluation Targets
 - Accuracy ≥ 0.85
 - Precision ≥ 0.85
 - Recall ≥ 0.75
@@ -173,7 +173,7 @@ The tuned model improves accuracy by +0.0056 and precision by +0.0157 over the p
 - Log Loss:  0.3948\
 **Kaggle Score: 0.77272**
 
-**Project Requirements Check**
+**Evaluation Targets Check**
 - Accuracy: 0.8603 ✓ (target ≥ 0.85)
 - Precision: 0.8929 ✓ (target ≥ 0.85)
 - Recall: 0.7246 ✗ (target ≥ 0.75)
@@ -190,6 +190,6 @@ Recall remains the one unmet target. While we were able to tune this model at 0.
 
 **(4/15/26)** Local metrics and Kaggle scores told different stories, and I was unable to close that gap. Local accuracy peaked at 0.8603 while my best Kaggle submission scored 0.77272.
 
-This is likely due to the size of the data set, only 891 rows. 0.2 test size was chosen to maximize training FOV. Threshold tables based on ~178 test passengers are sensitive to which passengers land in the test fold, so cross-validation gave a more honest estimate of ~0.83.
+This is likely due to the size of the data set, only 891 rows. 0.2 test size was chosen to maximize training FOV. threshold tables based on ~178 test passengers are sensitive to which passengers land in the test fold, so cross-validation gave a more honest estimate of ~0.83.
 
 Threshold 0.3 came within 0.01 precision of hitting all project targets locally, but scored 0.75358 on Kaggle, significantly worse than 0.45's 0.77272. While 0.3 may be more appropriate for real-world applications, like contacting shipwreck survivors, 0.45 is the correct threshold for competitive accuracy.
