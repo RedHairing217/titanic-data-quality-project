@@ -12,7 +12,7 @@ This project compares a baseline model against a cleaner, better-preprocessed ve
 - Log Loss ≤ 0.45
 ## Repository Structure
 - `src/` → code for audit, preprocessing, training, evaluation
-    - `tools.py` shared utilities imported across all scripts
+    - `tools.py` shared utilities imported across all scripts — consolidates cleaning, encoding, and training logic to ensure consistent behavior
 - `outputs/` → notes and results from data audit
 - `data/` → local data folders (raw data not tracked)
 ## Workflow
@@ -40,7 +40,7 @@ As a baseline model, `LogisticRegression` offers a clear perspective on feature 
 ## Logistic Model Insights
 (4/13/26) The rough model is strong overall, but recall is lower than precision, meaning the model misses a meaningful number of actual survivors.
 
-(4/13/26 5:24 PM PDT) Family size was collapsed from SibSp and ParCh, then solo travelers were isolated. This had no on affect model effectiveness, meaning that family size or whether someone was traveling alone are likely to be insignificant predictors for survival. Moving focus to age, sex, and Pclass.
+(4/13/26 5:24 PM PDT) Family size was collapsed from SibSp and ParCh, then solo travelers were isolated. This had no effect on model effectiveness, meaning that family size or whether someone was traveling alone are likely to be insignificant predictors for survival. Moving focus to age, sex, and Pclass.
 
 (4/14/26 2:18 PM PDT) Data cleaning and segmentation has proved inconsequential for improving accuracy, precision, or recall. While results are strong, more balance between precision and recall would be preferred. Moving to `RandomForest` model to add depth and deepen tuning options
 
@@ -101,7 +101,7 @@ The weakness of 0.375 is the obvious increase in false positives, 0.475 is the s
 ## Final Model Observations, Decision, and Justification
 **Final Observations**\
 Switching to `RandomForest` achieved the goal of increasing recall to acceptable levels with minimal impact to precision and accuracy.\
-Implementing our calibration tools even allowed for a decrease in Log Loss compared to Logistic Regression, which was an initial concern considering that ~0.65 Log Loss is unacceptable\
+Implementing calibration tools even allowed for a decrease in Log Loss compared to Logistic Regression, which was an initial concern considering that ~0.65 Log Loss is unacceptable\
 The calibration process also resulted in a minor decrease in Recall, with significant increases in Accuracy and Precision.\
 Implementing tuning allowed us to recover the lost Recall with minimal impact to other factors.
 
@@ -158,7 +158,7 @@ Constraining `max_depth` to 12 improved CV accuracy slightly, confirming that fu
 
 **Threshold Decision**\
 Two thresholds tie on Accuracy and Loss: 0.3 and 0.45. The difference is the Precision/Recall trade-off, 0.3 achieves Recall of 0.7826 at the cost of Precision dropping to 0.8438, while 0.45 maximizes Precision at 0.8929 with Recall at 0.7246.\
-Even though 0.3 comes closest to hitting project targets, submission at 0.3 produced a Kaggle score of 0.75358, significantly worse than 0.45's 0.77272\ 
+Even though 0.3 comes closest to hitting project targets, submission at 0.3 produced a Kaggle score of 0.75358, significantly worse than 0.45's 0.77272
 
 **Comparison to Previous Best**\
 The tuned model improves accuracy by +0.0056 and precision by +0.0157 over the previous final model (threshold 0.475), while holding recall steady. Log Loss is reduced to 0.3948
@@ -179,17 +179,14 @@ The tuned model improves accuracy by +0.0056 and precision by +0.0157 over the p
 - Recall: 0.7246 ✗ (target ≥ 0.75)
 - Log Loss: 0.3948 ✓ (target ≤ 0.45)
 
-Recall remains the one unmet target. While we were able to tune this model at 0.3 to get within 0.0062 Precision of our goal, that balanced model was inferior for competition purposes. 
+Recall remains the one unmet target. While I was able to tune this model at 0.3 to get within 0.0062 Precision of my goal, that balanced model was inferior for competition purposes. 
 
 
-## Refactor: Shared Tools Module
-
-(4/15/26) Cleaning, encoding, and training logic was consolidated into `tools.py` to eliminate code duplication across `final_model.py`, `predictor.py`, and `deep_tuner.py`. Previously, preprocessing was implemented independently in each file, leading to inconsistencies that caused the training and submission feature sets to diverge. All three scripts now import from `tools.py` to ensure consistent behavior.
 
 ## Project Retrospective
 
 **(4/15/26)** Local metrics and Kaggle scores told different stories, and I was unable to close that gap. Local accuracy peaked at 0.8603 while my best Kaggle submission scored 0.77272.
 
-This is likely due to the size of the data set, only 891 rows. 0.2 test size was chosen to maximize training FOV. threshold tables based on ~178 test passengers are sensitive to which passengers land in the test fold, so cross-validation gave a more honest estimate of ~0.83.
+This is likely due to the size of the data set, only 891 rows. Threshold tables based on ~178 test passengers are sensitive to which passengers land in the test fold, so cross-validation gave a more honest estimate of ~0.83.
 
 Threshold 0.3 came within 0.01 precision of hitting all project targets locally, but scored 0.75358 on Kaggle, significantly worse than 0.45's 0.77272. While 0.3 may be more appropriate for real-world applications, like contacting shipwreck survivors, 0.45 is the correct threshold for competitive accuracy.
